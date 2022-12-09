@@ -1,3 +1,4 @@
+import 'package:blackout_tracker/widgets/check_internet_conection_widget.dart';
 import 'package:blackout_tracker/widgets/get_battery_widget.dart';
 import 'package:blackout_tracker/widgets/get_data_time_widget.dart';
 import 'package:blackout_tracker/widgets/get_wifi_widget.dart';
@@ -17,6 +18,7 @@ class BlackoutTreckerScreen extends StatelessWidget {
         GetDataTimeWidget(),
         GetBatteryWidget(),
         GetWifiWidget(),
+        CheckInternetConectionWidget(),
       ]),
     );
   }
