@@ -1,8 +1,10 @@
+import 'package:blackout_tracker/core/platform/network_info.dart';
 import 'package:blackout_tracker/models/device_information.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:battery_plus/battery_plus.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:workmanager/workmanager.dart';
 
 class BlackoutCheckWidget extends StatefulWidget {
   const BlackoutCheckWidget({super.key});
@@ -12,68 +14,65 @@ class BlackoutCheckWidget extends StatefulWidget {
 }
 
 class _BlackoutCheckWidgetState extends State<BlackoutCheckWidget> {
-  DeviceInformation deviceInformation = DeviceInformation();
+  List<DeviceInformationModel> deviceInformationList = [];
+
   final DateTime _currentDataTime = DateTime.now();
   final Battery _battery = Battery();
   final Connectivity _connectivity = Connectivity();
-  ConnectivityResult? _connectionStatus;
-  BatteryState? _currentBatteryState;
+  bool? _connectionStatus;
+  final BatteryState _currentBatteryState = BatteryState.charging;
+  // late final NetworkInfo networkInfo;
+  DeviceInformationModel? deviceInformation;
 
   @override
   void initState() {
-    _getCurrentData();
-    _getCurrentTime();
-    _initConnectivity();
-    _tryConnection();
-    _getBatteryPercentage();
-    _isCharging();
+    getDeviceInformation();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Text('${deviceInformation.currentData}'),
-      Text('${deviceInformation.currentTime}'),
-      Text('${deviceInformation.isCharging}'),
-      Text('${deviceInformation.batteryLevel}'),
-      Text('${deviceInformation.isConnectedToWifi}'),
-      Text('${deviceInformation.isConnected}'),
+      Text('$_getCurrentData()'),
+      Text('$_getCurrentTime()'),
+      Text('$_isCharging()'),
+      Text('$_getBatteryPercentage()'),
+      Text('$_initConnectivity()'),
+      Text('$_connectionStatus'),
     ]);
   }
 
-  _getCurrentData() {
-    deviceInformation.currentData =
-        "${_currentDataTime.year}:${_currentDataTime.month}:${_currentDataTime.day}";
+  getDeviceInformation() {
+    deviceInformation = DeviceInformationModel(
+        currentData: _getCurrentData(),
+        currentTime: _getCurrentTime(),
+        isCharging: _isCharging(),
+        batteryLevel: _getBatteryPercentage(),
+        isConnectedToWifi: _initConnectivity(),
+        isConnected: _connectionStatus);
   }
 
-  _getCurrentTime() {
-    deviceInformation.currentTime =
-        "${_currentDataTime.hour}:${_currentDataTime.minute}:${_currentDataTime.second}";
+  String _getCurrentData() {
+    return "${_currentDataTime.year}:${_currentDataTime.month}:${_currentDataTime.day}";
   }
 
-  void _isCharging() async {
+  String _getCurrentTime() {
+    return "${_currentDataTime.hour}:${_currentDataTime.minute}:${_currentDataTime.second}";
+  }
+
+  Future<bool> _isCharging() async {
     final state = await _battery.batteryState;
-    deviceInformation.isCharging = _currentBatteryState == state;
+    return _currentBatteryState == state;
   }
 
-  void _getBatteryPercentage() async {
-    final level = await _battery.batteryLevel;
-    deviceInformation.batteryLevel = level;
+  Future<int> _getBatteryPercentage() async {
+    return await _battery.batteryLevel;
   }
 
-  Future<void> _initConnectivity() async {
+  Future<bool> _initConnectivity() async {
     late ConnectivityResult result;
     result = await _connectivity.checkConnectivity();
-    _updateConnectionStatus(result);
-  }
-
-  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
-    setState(() {
-      _connectionStatus = result;
-      deviceInformation.isConnectedToWifi =
-          _connectionStatus == ConnectivityResult.wifi;
-    });
+    return ConnectivityResult.wifi == result;
   }
 
   Future<void> _tryConnection() async {
@@ -81,11 +80,11 @@ class _BlackoutCheckWidgetState extends State<BlackoutCheckWidget> {
       final response = await InternetAddress.lookup('www.google.com');
 
       setState(() {
-        deviceInformation.isConnected = response.isNotEmpty;
+        _connectionStatus = response.isNotEmpty;
       });
     } on SocketException catch (e) {
       setState(() {
-        deviceInformation.isConnected = false;
+        _connectionStatus = false;
       });
     }
   }

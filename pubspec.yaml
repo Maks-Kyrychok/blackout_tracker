@@ -36,6 +36,10 @@ dependencies:
   battery_plus: ^3.0.2
   connectivity_plus: ^3.0.2
   battery_plus_web: ^1.1.0
+  workmanager: ^0.5.1
+  equatable: ^2.0.5
+  shared_preferences: ^2.0.15
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
