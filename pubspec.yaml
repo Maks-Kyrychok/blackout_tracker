@@ -36,6 +36,7 @@ dependencies:
   battery_plus: ^3.0.2
   connectivity_plus: ^3.0.2
   battery_plus_web: ^1.1.0
+  shared_preferences: ^2.0.17
 
 dev_dependencies:
   flutter_test:

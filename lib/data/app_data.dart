@@ -43,12 +43,12 @@ class AppData {
         _connectionStatus == ConnectivityResult.wifi;
   }
 
-  Future<void> tryConnection() async {
+  Future<bool> tryConnection() async {
     try {
       final response = await InternetAddress.lookup('www.google.com');
-      appData.isConnected = response.isNotEmpty;
+      return appData.isConnected = response.isNotEmpty;
     } on SocketException {
-      appData.isConnected = false;
+      return appData.isConnected = false;
     }
   }
 }
