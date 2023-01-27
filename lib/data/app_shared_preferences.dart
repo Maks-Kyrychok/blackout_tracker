@@ -3,11 +3,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppSharedPreferences {
   final Future<SharedPreferences> preferences = SharedPreferences.getInstance();
 
-  Future<void> setDateTime(String dateTime) async {
-    (await preferences).setString('dateTime', dateTime);
+  Future<void> setDate(String date) async {
+    (await preferences).setString('date', date);
   }
-  Future<String?> getDateTime() async {
-    return (await preferences).getString('dateTime');
+  Future<String?> getDate() async {
+    return (await preferences).getString('date');
+  }
+
+  Future<void> setTime(String time) async {
+    (await preferences).setString('time', time);
+  }
+  Future<String?> getTime() async {
+    return (await preferences).getString('time');
   }
 
   Future<void> setBatteryLevel(int? batteryLevel) async {

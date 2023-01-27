@@ -12,7 +12,7 @@ class AppData {
   ConnectivityResult? _connectionStatus;
   BatteryState? _currentBatteryState;
 
-  String? getCurrentData() {
+  String getCurrentData() {
     return appData.currentData =
         "${_currentDataTime.year}:${_currentDataTime.month}:${_currentDataTime.day}";
   }
@@ -31,14 +31,8 @@ class AppData {
     return appData.batteryLevel = await _battery.batteryLevel;
   }
 
-  Future<void> initConnectivity() async {
-    late ConnectivityResult result;
-    result = await _connectivity.checkConnectivity();
-    _updateConnectionStatus(result);
-  }
-
-  Future<bool> _updateConnectionStatus(ConnectivityResult result) async {
-    _connectionStatus = result;
+  Future<bool> isConnectedToWiFi() async {
+    _connectionStatus = await _connectivity.checkConnectivity();
     return appData.isConnectedToWifi =
         _connectionStatus == ConnectivityResult.wifi;
   }
