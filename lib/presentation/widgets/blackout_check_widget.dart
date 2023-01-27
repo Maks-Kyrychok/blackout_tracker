@@ -1,8 +1,8 @@
+import 'package:battery_plus/battery_plus.dart';
 import 'package:blackout_tracker/models/device_information.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:battery_plus/battery_plus.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 class BlackoutCheckWidget extends StatefulWidget {
   const BlackoutCheckWidget({super.key});

@@ -1,4 +1,4 @@
-import 'package:blackout_tracker/widgets/blackout_check_widget.dart';
+import 'package:blackout_tracker/presentation/widgets/blackout_check_widget.dart';
 import 'package:flutter/material.dart';
 
 class BlackoutTreckerScreen extends StatelessWidget {
