@@ -11,9 +11,9 @@ class CustomTheme {
             elevation: 0.0,
             shadowColor: Colors.transparent),
         textTheme: const TextTheme(
-          subtitle1: TextStyle(color: Colors.black, fontSize: 16),
-          subtitle2: TextStyle(color: Colors.black, fontSize: 14),
-          bodyText2: TextStyle(color: Colors.black, fontSize: 16),
+          subtitle1: TextStyle(color: Colors.white, fontSize: 16),
+          subtitle2: TextStyle(color: Colors.white, fontSize: 14),
+          bodyText2: TextStyle(color: Colors.white, fontSize: 16),
         ));
   }
 }

@@ -12,6 +12,7 @@ class BlackoutTreckerScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Column(children: const [
+        
         BlackoutCheckWidget(),
       ]),
     );

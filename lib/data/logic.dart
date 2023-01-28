@@ -17,10 +17,10 @@ class Logic {
     return time;
   }
 
-  Future<String?> getAndSaveBatteryLevel() async {
+  Future<int?> getAndSaveBatteryLevel() async {
     int? batteryLevel = await appData.getBatteryPercentage();
     await appSharedPreferences.setBatteryLevel(batteryLevel);
-    return batteryLevel.toString();
+    return batteryLevel;
   }
 
   Future<String> getAndSaveChargingStatus() async {
