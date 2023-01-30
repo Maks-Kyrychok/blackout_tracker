@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class CustomTheme {
   static ThemeData get darkTheme {
     return ThemeData(
+        useMaterial3: true,
         primaryColor: AppColors.mainBackground,
         scaffoldBackgroundColor: AppColors.mainBackground,
         appBarTheme: const AppBarTheme(
